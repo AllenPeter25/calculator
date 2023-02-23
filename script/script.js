@@ -1,0 +1,80 @@
+const blackButtons = document.querySelectorAll('.black')
+const pinkButtons = document.querySelectorAll(".pink")
+const display = document.querySelector('.display').childNodes[3]
+const mKeys = document.querySelectorAll(".gray")
+let output = '';
+display.value = ''
+let temp = '';
+let memory =''
+
+blackButtons.forEach((x) => {
+    x.addEventListener('click', (e) => {
+        if(e.target.value != "C"){
+            temp += e.target.value
+            display.value = temp
+        }
+        else{
+            temp = '';
+            output = ''
+            display.value = '';
+        }
+    })
+})
+
+pinkButtons.forEach(x => {
+    x.addEventListener('click',(e) => {
+        if(/\d/.test(output[output.length-1])){
+            display.value = display.value
+        }
+        else{
+            try{
+               display.value = eval(output+temp)
+            }
+            catch (e){
+                output = output.slice(0,-1)
+            }
+        }
+        output += temp
+        temp = ''
+        if(!/\d/.test(output[output.length - 1])){
+            output = output.slice(0,-1)
+        }
+        output += e.target.value
+    } )
+})
+
+document.querySelector(".orange").addEventListener('click',() => {
+    output+=temp
+    temp = ''
+    display.value = eval(output);
+})
+
+mKeys.forEach((x) => {
+    x.addEventListener('click', (e) => {
+        if(e.target.value == "m+"){
+            if(document.getElementsByClassName("memory")[0].innerHTML.length){
+                output+=memory
+                display.value = eval(output)
+            }
+            else{
+                memory = "+"+eval(output)
+                output = ''
+                document.getElementsByClassName("memory")[0].innerHTML = "m"
+            }
+        }
+        else if(e.target.value == "m-"){
+            if(document.getElementsByClassName("memory")[0].innerHTML.length){
+                output+=memory
+                display.value = Number(eval(output))*-1
+            }
+            else{
+                memory = "-"+eval(output)
+                output = ''
+                document.getElementsByClassName("memory")[0].innerHTML = "m"
+            }
+        }
+        else{
+            display.value = memory.slice(1)
+        }
+    })
+})
