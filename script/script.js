@@ -78,3 +78,61 @@ mKeys.forEach((x) => {
         }
     })
 })
+
+window.addEventListener("keydown", (e) => {
+    if(e.defaultPrevented){
+        return
+    }
+
+    switch (e.key){
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case "0": 
+                temp += String(e.key)
+                display.value = temp
+                break;
+
+        case "c":
+                if(String(e.key) != "C"){
+                    temp += String(e.key)
+                    display.value = temp
+                }
+
+        case "-":
+        case "*":
+        case "/":
+        case "+":
+                if(/\d/.test(output[output.length-1])){
+                    display.value = display.value
+                }
+                else{
+                    try{
+                    display.value = eval(output+temp)
+                    }
+                    catch (e){
+                        output = output.slice(0,-1)
+                    }
+                }
+                output += temp
+                temp = ''
+                if(!/\d/.test(output[output.length - 1])){
+                    output = output.slice(0,-1)
+                }
+                output += String(e.key)
+                break;
+        
+        case "Enter":
+                    debugger
+                    output+=temp
+                    temp = ''
+                    display.value = eval(output);
+                    output = ''
+    }
+})
