@@ -102,7 +102,7 @@ window.addEventListener("keydown", (e) => {
         case "c":
                 if(String(e.key) != "C"){
                     temp += String(e.key)
-                    display.value = temp
+                    display.value = ''
                 }
 
         case "-":
@@ -129,7 +129,6 @@ window.addEventListener("keydown", (e) => {
                 break;
         
         case "Enter":
-                    debugger
                     output+=temp
                     temp = ''
                     display.value = eval(output);
